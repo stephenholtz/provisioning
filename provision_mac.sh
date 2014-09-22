@@ -164,11 +164,19 @@ git config --global credential.helper osxkeychain
 git config --global core.autocrlf input
 git config --global core.safecrlf true
 
-## dotfile setup (includes antigen subrepository)
+# dotfile setup
+# includes ./antigen for zsh plugins
+# includes ./.vim/bundle/vundle for vim plugins
 if [ ! -d "$HOME/dotfiles" ]; then
     git clone https://github.com/stephenholtz/dotfiles.git $HOME/dotfiles
 fi
-cd $HOME/dotfiles; sh $HOME/dotfiles/linkall.sh
+
+# Install all vim bundles
+vim +BundleInstall! +qall
+
+# Run sym-linking script from dotfiles
+cd $HOME/dotfiles 
+sh linkall.sh
 
 if [ ! -d "$HOME/code" ]; then
     mkdir -v $HOME/code
