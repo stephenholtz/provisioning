@@ -171,10 +171,14 @@ if [ ! -d "$HOME/dotfiles" ]; then
     git clone https://github.com/stephenholtz/dotfiles.git $HOME/dotfiles
 fi
 
+<<<<<<< HEAD
 # Install all vim bundles
 vim +BundleInstall! +qall
 
 # Run sym-linking script from dotfiles
+=======
+# run sym-linking script from dotfiles
+>>>>>>> 8f6b0eda32810d172067f3b7acf952c9e447bfff
 cd $HOME/dotfiles 
 sh linkall.sh
 
