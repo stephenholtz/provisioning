@@ -1,0 +1,60 @@
+# command-line utilites installed with 'brew install'
+# Shell / utils
+tmux
+zsh
+trash
+tree
+fasd
+vifm
+task --with-gnutls
+wget
+the_silver_searcher
+md5sha1sum
+openssl
+p7zip
+pkg-config
+qt
+reattach-to-user-namespace
+speedtest_cli
+sqlite
+# OS utils
+dockutil
+htop-osx
+# Browsers
+elinks
+links
+# Fun
+figlet
+fortune
+cmatrix
+cowsay
+# Media
+imagemagick
+lame
+jpeg
+mpg123
+mplayer
+# Editors
+vim --override-system-vi
+emacs
+# Languages / utils (mostly handled elsewhere)
+ctags
+node
+go
+gcc
+cmake
+rbenv
+rbenv-gem-rehash
+ruby-build
+ghostscript
+# VCS
+git
+svn
+mercurial
+# Gem and ruby utils
+rbenv
+ruby-build
+# Chat
+aspell
+bitlbee
+weechat --with-aspell --with-python --with-perl --with-lua --with-ruby
