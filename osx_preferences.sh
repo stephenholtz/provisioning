@@ -208,14 +208,6 @@ defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
 ######################################################################
-# iTerm2 
-######################################################################
-# Install the Solarized Dark theme for iTerm
-if [ -d ${HOME}/.colors/base16-iterm2 ]; then
-    open "${HOME}/.colors/base16-iterm2/base16-chalk.dark.256.itermcolors"
-fi
-
-######################################################################
 # Kill affected applications
 ######################################################################
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
