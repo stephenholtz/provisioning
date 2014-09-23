@@ -4,10 +4,12 @@
 
 # Ask for the administrator password upfront
 sudo -v
-
 # Keep-alive: update existing sudo time stamp until finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+######################################################################
+# System-wide misc.,
+######################################################################
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
 
@@ -42,8 +44,9 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on
 
+######################################################################
 # SSD-specific 
-
+######################################################################
 # Disable local Time Machine snapshots
 sudo tmutil disablelocal
 
@@ -53,12 +56,13 @@ sudo pmset -a hibernatemode 0
 # Disable the sudden motion sensor as it’s not useful for SSDs
 sudo pmset -a sms 0
 
+######################################################################
 # Keyboard trackpad
-
-# Modifier Keys… > Apple Internal Keyboard / Trackpad > Caps Lock to Control
+######################################################################
+# Caps Lock to Control
 defaults -currentHost write -g 'com.apple.keyboard.modifiermapping.1452-566-0' -array '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
 
-# Modifier Keys… > Apple Keyboard [External] > Caps Lock to Control
+# [External] Caps Lock to Control
 defaults -currentHost write -g 'com.apple.keyboard.modifiermapping.1452-544-0' -array '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
 
 # Stop iTunes from responding to the keyboard media keys
@@ -67,8 +71,9 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0
 
-# finder
-
+######################################################################
+# Finder
+######################################################################
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
@@ -124,8 +129,9 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 # Show the ~/Library folder
 chflags nohidden ~/Library
 
+######################################################################
 # Dock desktop etc.,
-
+######################################################################
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"
 
@@ -172,16 +178,18 @@ defaults write com.apple.dock autohide -bool true
 # Make Dock more transparent
 defaults write com.apple.dock hide-mirror -bool true
 
+######################################################################
 # Time Machine
-
+######################################################################
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
+######################################################################
 # Activity Monitor
-
+######################################################################
 # Show the main window when launching Activity Monitor
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
@@ -199,10 +207,20 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
+######################################################################
+# iTerm2 
+######################################################################
+# Install the Solarized Dark theme for iTerm
+if [ -d ${HOME}/.colors/base16-iterm2 ]; then
+    open "${HOME}/.colors/base16-iterm2/base16-chalk.dark.256.itermcolors"
+fi
+
+######################################################################
 # Kill affected applications
+######################################################################
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 	"Dock" "Finder" "Mail" "Messages" "Safari" "SystemUIServer" \
-	"Terminal" "iCal"; do
+	"iCal"; do
 	killall "${app}" > /dev/null 2>&1
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
