@@ -64,6 +64,7 @@ done < brew.installs
 
 # install free/freemium apps with brew-cask 
 better_echo "Installing apps with homebrew-cask from cask.installs."
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/opt/homebrew-cask/Caskroom"
 if brewlist | grep -q 'brew-cask'; then
     better_echo "Found brew-cask."
 else
@@ -131,17 +132,15 @@ else
 fi
 # TODO:make sure conda is in PATH before this
 better_echo "Updating Anaconda packages"
-conda update conda
-conda update anaconda
+$HOME/anaconda/bin/conda update conda
+$HOME/anaconda/bin/conda update anaconda
 
 # other python tools
 # TODO:make sure pip is in PATH before this
 better_echo "Configuring pip install packanges"
-pip install git+git://github.com/Lokaltog/powerline
-pip install virtualenvwrapper
-pip install awscli
-pip install setuptools
-pip install termdown
+PATH="$HOME/Library/Python/2.7/bin:$PATH"
+/usr/local/pip install git+git://github.com/Lokaltog/powerline
+/usr/local/pip install virtualenvwrapper awscli setuptools termdown
 
 # R TODO: config
 #better_echo "Configuring R environment"
@@ -152,13 +151,12 @@ if ! hash npm &> /dev/null; then
     brew update
     brew install node
 fi
-npm install -g d3
-npm install -g angular
+/usr/local/npm install -g d3
+/usr/local/npm install -g angular
 
 # Now set up osx preferences
 better_echo "Configuring OSX Preferences, need to log out and in for some to take effect."
 bash osx_preferences.sh
-#TODO move to left side
 dockutil --add '~/Downloads' --view grid --display automatic
 
 # Clone/build code repositories
@@ -182,12 +180,10 @@ fi
 sh $HOME/dotfiles/linkall.sh
 better_echo "Configuring zshell/plugins"
 # Install zsh bundles through antigen
-# TODO: make this run properly
-. $HOME/.zshrc
+source ${HOME}/.zshrc
 better_echo "Installing vim Plugins"
 # Install all vim bundles
-# TODO: make this run properly
-vim +PluginInstall! +qall
+/usr/local/bin/vim +PluginInstall! +qall
 
 if [ ! -d "$HOME/code" ]; then
     mkdir -v $HOME/code

@@ -2,8 +2,6 @@
 # Based on the incredible https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 # For documentation http://www.defaults-write.com
 
-#TODO: add tap to click
-
 # Ask for the administrator password upfront
 sudo -v
 # Keep-alive: update existing sudo time stamp until finished
@@ -61,19 +59,18 @@ sudo pmset -a sms 0
 ######################################################################
 # Keyboard trackpad
 ######################################################################
-#TODO: make trackpad faster
 #TODO: make Control to caps work
-# Caps Lock to Control
-defaults -currentHost write -g 'com.apple.keyboard.modifiermapping.1452-566-0' -array '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
 
-# [External] Caps Lock to Control
-defaults -currentHost write -g 'com.apple.keyboard.modifiermapping.1452-544-0' -array '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
-
+# Make trackpad much faster
+defaults -currentHost write com.apple.trackpad.scaling -int 3
 # Stop iTunes from responding to the keyboard media keys
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 # Set a blazingly fast keyboard repeat rate
 defaults write NSGlobalDomain KeyRepeat -int 0
+
+# Tap to click on
+defaults -currentHost write -globalDomain com.apple.mouse.tapBehavior -int 1
 
 ######################################################################
 # Finder
