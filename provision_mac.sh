@@ -189,7 +189,7 @@ if [ ! -d "$HOME/code/personal" ]; then
     mkdir -v $HOME/code/personal/
 fi
 if [ ! -d "$HOME/code/janelia" ]; then
-    mkdir -v $HOME/code/personal/
+    mkdir -v $HOME/code/janelia/
 fi
 
 better_echo "Setting iTerm2.app preferences from dotfiles"
