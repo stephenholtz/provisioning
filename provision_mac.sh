@@ -1,6 +1,7 @@
 #!/bin/sh
 # need xcode command-line/developer tools 
 # Xcode 5.1+, OSX 10.9+ xcode-select --install
+xcode-select --install
 
 # Colorize+format output
 function better_echo () {
@@ -100,7 +101,6 @@ brew linkapps
 # insert shims in the path to # not muck with shipped
 # ruby requires rbenv, rbenv-build, rbenv-gem-rehash
 better_echo "Configuring ruby environment"
-
 PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 rbenv install 2.1.2
@@ -141,16 +141,14 @@ pip install awscli
 pip install setuptools
 pip install termdown
 
-# R
-better_echo "Configuring R environment"
-# TODO
-# node 
-better_echo "Configuring node environment"
-# TODO
+# R TODO: config
+#better_echo "Configuring R environment"
+# node TODO: config
+#better_echo "Configuring node environment"
 
 # Now set up osx preferences
 better_echo "Configuring OSX Preferences, need to log out and in for some to take effect."
-bash osx_prefs.sh
+bash osx_preferences.sh
 dockutil --add '~/Downloads' --view grid --display automatic
 
 # Clone/build code repositories
@@ -168,27 +166,33 @@ git config --global core.safecrlf true
 # includes ./antigen for zsh plugins
 # includes ./.vim/bundle/vundle for vim plugins
 if [ ! -d "$HOME/dotfiles" ]; then
-    git clone https://github.com/stephenholtz/dotfiles.git $HOME/dotfiles
+    git clone --recursive https://github.com/stephenholtz/dotfiles.git $HOME/dotfiles
 fi
-# run sym-linking script from dotfiles
-# required for vundle + antigen
-cd $HOME
+# run sym-linking script from dotfiles required for vundle + antigen
 sh $HOME/dotfiles/linkall.sh
-
+better_echo "Configuring zshell/plugins"
+# Install zsh bundles through antigen
+. $HOME/.zshrc
+better_echo "Installing vim Plugins"
 # Install all vim bundles
-vim +BundleInstall! +qall
+vim +PluginInstall! +qall
 
 if [ ! -d "$HOME/code" ]; then
     mkdir -v $HOME/code
 fi
 if [ ! -d "$HOME/code/grad" ]; then
     mkdir -v $HOME/code/grad/
-    git clone https://github.com/stephenholtz/matlab-utils.git $HOME/code/grad/matlab-utils
+    git clone --recursive https://github.com/stephenholtz/matlab-utils.git $HOME/code/grad/matlab-utils
     git clone https://github.com/stephenholtz/matlab-tiff-utils.git $HOME/code/grad/matlab-tiff-utils
 fi
 if [ ! -d "$HOME/code/personal" ]; then
     mkdir -v $HOME/code/personal/
 fi
+if [ ! -d "$HOME/code/janelia" ]; then
+    mkdir -v $HOME/code/personal/
+fi
 
-better_echo "Script finished. Log out and in"
-better_echo "iTerm2.app not yet configured"
+better_echo "Setting iTerm2.app preferences from dotfiles"
+defaults write com.googlecode.iterm2 PrefsCustomFolder "${HOME}/dotfiles/"
+
+better_echo "Script finished. Log out to finish changes."
