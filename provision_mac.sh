@@ -137,14 +137,22 @@ conda update anaconda
 # other python tools
 better_echo "Configuring pip install packanges"
 pip install git+git://github.com/Lokaltog/powerline
+pip install virtualenvwrapper
 pip install awscli
 pip install setuptools
 pip install termdown
 
 # R TODO: config
 #better_echo "Configuring R environment"
-# node TODO: config
-#better_echo "Configuring node environment"
+
+# node configuration (mostly for d3)
+better_echo "Configuring node environment"
+if ! hash npm &> /dev/null; then
+    brew update
+    brew install node
+fi
+npm install -g d3
+npm install -g angular
 
 # Now set up osx preferences
 better_echo "Configuring OSX Preferences, need to log out and in for some to take effect."
