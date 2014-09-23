@@ -1,7 +1,6 @@
 #!/bin/sh
 # need xcode command-line/developer tools 
 # Xcode 5.1+, OSX 10.9+ xcode-select --install
-xcode-select --install
 
 # Colorize+format output
 function better_echo () {
@@ -130,11 +129,13 @@ if ! hash conda &> /dev/null; then
 else
     better_echo "Anaconda already installed"
 fi
+# TODO:make sure conda is in PATH before this
 better_echo "Updating Anaconda packages"
 conda update conda
 conda update anaconda
 
 # other python tools
+# TODO:make sure pip is in PATH before this
 better_echo "Configuring pip install packanges"
 pip install git+git://github.com/Lokaltog/powerline
 pip install virtualenvwrapper
@@ -157,6 +158,7 @@ npm install -g angular
 # Now set up osx preferences
 better_echo "Configuring OSX Preferences, need to log out and in for some to take effect."
 bash osx_preferences.sh
+#TODO move to left side
 dockutil --add '~/Downloads' --view grid --display automatic
 
 # Clone/build code repositories
@@ -180,9 +182,11 @@ fi
 sh $HOME/dotfiles/linkall.sh
 better_echo "Configuring zshell/plugins"
 # Install zsh bundles through antigen
+# TODO: make this run properly
 . $HOME/.zshrc
 better_echo "Installing vim Plugins"
 # Install all vim bundles
+# TODO: make this run properly
 vim +PluginInstall! +qall
 
 if [ ! -d "$HOME/code" ]; then
