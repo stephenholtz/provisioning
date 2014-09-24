@@ -195,9 +195,6 @@ if [ ! -d "$HOME/dotfiles" ]; then
 fi
 # run sym-linking script from dotfiles required for vundle + antigen
 sh $HOME/dotfiles/linkall.sh
-better_echo "Configuring zshell/plugins"
-# Install zsh bundles through antigen
-source ${HOME}/.zshrc
 better_echo "Installing vim Plugins"
 # Install all vim bundles
 eval $(which vim) +PluginInstall! +qall
