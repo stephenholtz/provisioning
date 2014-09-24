@@ -107,7 +107,7 @@ rbenv install 2.1.2
 rbenv global 2.1.2
 gem update --system
 gem install tmuxinator lolcat json json_pure vimgolf
-gem install bundler foreman pg rails thin --no-rdoc --no-ri
+gem install bundler foreman pg rails thin
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
@@ -130,32 +130,49 @@ if ! hash conda &> /dev/null; then
 else
     better_echo "Anaconda already installed"
 fi
-# TODO:make sure conda is in PATH before this
 better_echo "Updating Anaconda packages"
-$HOME/anaconda/bin/conda update conda
-$HOME/anaconda/bin/conda update anaconda
+if hash conda &> /dev/null; then
+    eval $(which conda)update conda
+    eval $(which conda) update anaconda
+else
+    better_echo "   conda command not found, potential path problem"
+    echo "Problem using conda command" >> ${HOME}/provisioning.log 
+fi
 
 # other python tools
-# TODO:make sure pip is in PATH before this
-better_echo "Configuring pip install packanges"
-PATH="$HOME/Library/Python/2.7/bin:$PATH"
-/usr/local/pip install git+git://github.com/Lokaltog/powerline
-/usr/local/pip install virtualenvwrapper awscli setuptools termdown
+better_echo "Configuring pip install packanges outside of Anaconda"
+if ! hash pip &> /dev/null; then
+    brew update
+    brew install node
+else
+    if hash pip &> /dev/null; then
+        eval $(which pip) install git+git://github.com/Lokaltog/powerline
+        eval $(which pip) install virtualenvwrapper awscli setuptools termdown
+    else
+        better_echo "   Pip not found, potential path problem"
+        echo "Problem installing pip" >> ${HOME}/provisioning.log 
+    fi
+fi
 
-# R TODO: config
-#better_echo "Configuring R environment"
+# R TODO: add config
+#better_echo "Configuring R environment" 
 
 # node configuration (mostly for d3)
 better_echo "Configuring node environment"
 if ! hash npm &> /dev/null; then
     brew update
     brew install node
+else
+    if hash npm &> /dev/null; then
+        eval $(which npm) install -g d3 angular
+    else
+        better_echo "   Node not found, potential path problem"
+        echo "Problem installing node" >> ${HOME}/provisioning.log 
+    fi
 fi
-/usr/local/npm install -g d3
-/usr/local/npm install -g angular
 
 # Now set up osx preferences
-better_echo "Configuring OSX Preferences, need to log out and in for some to take effect."
+better_echo "Configuring OSX Preferences. Log out and in for some effects."
 bash osx_preferences.sh
 dockutil --add '~/Downloads' --view grid --display automatic
 
@@ -183,7 +200,7 @@ better_echo "Configuring zshell/plugins"
 source ${HOME}/.zshrc
 better_echo "Installing vim Plugins"
 # Install all vim bundles
-/usr/local/bin/vim +PluginInstall! +qall
+eval $(which vim) +PluginInstall! +qall
 
 if [ ! -d "$HOME/code" ]; then
     mkdir -v $HOME/code
@@ -200,7 +217,8 @@ if [ ! -d "$HOME/code/janelia" ]; then
     mkdir -v $HOME/code/janelia/
 fi
 
-better_echo "Setting iTerm2.app preferences from dotfiles"
-defaults write com.googlecode.iterm2 PrefsCustomFolder "${HOME}/dotfiles/"
+better_echo "Setting iTerm2.app preferences from dotfiles :) "
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -int 1
+defaults write com.googlecode.iterm2 PrefsCustomFolder ${HOME}/dotfiles/
 
 better_echo "Script finished. Log out to finish changes."
