@@ -107,7 +107,7 @@ rbenv install 2.1.2
 rbenv global 2.1.2
 gem update --system
 gem install tmuxinator lolcat json json_pure vimgolf
-gem install bundler foreman pg rails thin
+gem install bundler foreman rails thin
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
