@@ -1,5 +1,6 @@
 # command-line utilites installed with 'brew install'
 # Shell / utils
+coreutils
 tmux
 zsh
 trash
