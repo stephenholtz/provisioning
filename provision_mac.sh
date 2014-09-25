@@ -82,7 +82,6 @@ else
     brew install brew-cask
 fi 
 brew cask cleanup
-brew cask checklinks $(brew cask list)
 
 casklist=$(brew cask list)
 while read -r line; do
