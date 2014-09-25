@@ -9,7 +9,17 @@ function better_echo () {
     printf "\n%b\n" "${GREEN}$1${NORMAL}"
 }
 
+# Remove temporary sudoers change
+function restore_sudoers_timeout () {
+    better_echo "Restoring /etc/sudoers. Backup at /etc/sudoers.bkp"
+    sudo sed -i.bkp '/Defaults timestamp_timeout=-1/d ' /etc/sudoers
+}
+
+better_echo "******************************************************"
 better_echo "Starting mac provisioning script!"
+better_echo "******************************************************"
+better_echo "If this script does not terminate, may need to remove the last line from /etc/sudoers"
+echo "Defaults timestamp_timeout=-1" | sudo tee -a /etc/sudoers || exit 2
 
 # Set zsh as SHELL
 if grep -qE 'zsh' "$SHELL"; then
@@ -72,6 +82,7 @@ else
     brew install brew-cask
 fi 
 brew cask cleanup
+brew cask checklinks $(brew cask list)
 
 casklist=$(brew cask list)
 while read -r line; do
@@ -87,6 +98,8 @@ done < cask.installs
 
 # make sure alfred app can get to caskroom directory
 better_echo "Attempting to link Alfred"
+# first need to open alfred
+open $(brew cask list alfred | grep -E -o -m1 '/opt/homebrew-cask/Caskroom/alfred.*app')
 brew cask alfred status
 if [ $? -ne 0 ]; then 
     brew cask alfred link
@@ -217,5 +230,8 @@ fi
 better_echo "Setting iTerm2.app preferences from dotfiles :) "
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -int 1
 defaults write com.googlecode.iterm2 PrefsCustomFolder ${HOME}/dotfiles/
+
+better_echo "Restoring /etc/sudoers file."
+restore_sudoers_timeout 
 
 better_echo "Script finished. Log out to finish changes."
