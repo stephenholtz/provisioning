@@ -129,7 +129,7 @@ if ! hash conda &> /dev/null; then
     cd "$HOME/Downloads/Provisioning"
     ANACONDA_VER='2.0.1'
     ANACONDA_MD5='85d261fd4e651f891ca5d0df69441e00'
-    better_echo "Downloading Anaconda installer to " $HOME/Downloads/Provisioning/
+    better_echo "Downloading Anaconda installer to  $HOME/Downloads/Provisioning/"
     curl -O --progress-bar http://repo.continuum.io/archive/Anaconda-$ANACONDA_VER-MacOSX-x86_64.sh
     if [[ ! $(md5 -q Anaconda-$ANACONDA_VER-MacOSX-x86_64.sh) =~ $ANACONDA_MD5 ]]; then
         better_echo 'Anaconda download failed md5.'
