@@ -2,6 +2,10 @@
 # need xcode command-line/developer tools 
 # Xcode 5.1+, OSX 10.9+ xcode-select --install
 
+# Some notes:
+# Apple provided Python is in /System/Library
+#  
+
 # Colorize+format output
 function better_echo () {
     NORMAL=$(tput sgr0)
@@ -21,17 +25,22 @@ better_echo "******************************************************"
 better_echo "If this script does not terminate, may need to remove the last line from /etc/sudoers"
 echo "Defaults timestamp_timeout=-1" | sudo tee -a /etc/sudoers || exit 2
 
+# Update osx software
+better_echo "Upgrading OSX Software"
+softwareupdate --install --all
+sudo xcodebuild -license
+
 # Set zsh as SHELL
 if grep -qE 'zsh' "$SHELL"; then
-    better_echo "SHELL already set to zsh."
+    better_echo "User SHELL already set to zsh."
 else
-    better_echo "Setting SHELL to zsh."
+    better_echo "Setting user SHELL to zsh."
     chsh -s $(which zsh) 
 fi 
 
 # Install homebrew
 if hash brew &> /dev/null; then
-    better_echo "Homebrew found, skipping installation."
+    better_echo "Homebrew found, skipping installation, but see brew doctor output:"
 else
     better_echo "Installing homebrew."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -110,13 +119,15 @@ brew cask cleanup
 brew linkapps
 
 # gems configuration -- use rbenv ruby-build
-# insert shims in the path to # not muck with shipped
+# insert shims in the path to not muck with shipped
 # ruby requires rbenv, rbenv-build, rbenv-gem-rehash
 better_echo "Configuring ruby environment"
 PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 rbenv install 2.1.2
 rbenv global 2.1.2
+rbenv install bundler
+rbenv rehash
 gem update --system
 gem install tmuxinator lolcat json json_pure vimgolf
 gem install bundler foreman rails thin
@@ -228,7 +239,7 @@ fi
 
 better_echo "Setting iTerm2.app preferences from dotfiles :) "
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -int 1
-defaults write com.googlecode.iterm2 PrefsCustomFolder ${HOME}/dotfiles/
+defaults write com.googlecode.iterm2 PrefsCustomFolder ${HOME}/dotfiles/iterm2/
 
 better_echo "Restoring /etc/sudoers file."
 restore_sudoers_timeout 
