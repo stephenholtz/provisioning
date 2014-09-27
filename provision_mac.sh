@@ -2,10 +2,6 @@
 # need xcode command-line/developer tools 
 # Xcode 5.1+, OSX 10.9+ xcode-select --install
 
-# Some notes:
-# Apple provided Python is in /System/Library
-#  
-
 # Colorize+format output
 function better_echo () {
     NORMAL=$(tput sgr0)
@@ -80,6 +76,9 @@ while read -r line; do
         fi
     fi
 done < brew.installs
+PATH="usr/local/sbin:$PATH"
+PATH="usr/local/bin:$PATH"
+export PATH
 
 # install free/freemium apps with brew-cask 
 better_echo "Installing apps with homebrew-cask from cask.installs."
@@ -103,6 +102,9 @@ while read -r line; do
         fi
     fi
 done < cask.installs 
+PATH="usr/local/sbin:$PATH"
+PATH="usr/local/bin:$PATH"
+export PATH
 
 # make sure alfred app can get to caskroom directory
 better_echo "Attempting to link Alfred"
@@ -129,8 +131,23 @@ rbenv global 2.1.2
 rbenv install bundler
 rbenv rehash
 gem update --system
-gem install tmuxinator lolcat json json_pure vimgolf
-gem install bundler foreman rails thin
+gem install foreman rails thin
+gem install tmuxinator json json_pure vimgolf
+
+# other python tools
+better_echo "Configuring pip install packanges outside of Anaconda"
+if ! hash pip &> /dev/null; then
+    brew update
+    brew install node
+else
+    if hash pip &> /dev/null; then
+        eval $(which pip) install git+git://github.com/Lokaltog/powerline
+        eval $(which pip) install virtualenvwrapper awscli setuptools termdown
+    else
+        better_echo "   Pip not found, potential path problem"
+        echo "Problem installing pip" >> ${HOME}/provisioning.log 
+    fi
+fi
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
@@ -154,27 +171,14 @@ else
     better_echo "Anaconda already installed"
 fi
 better_echo "Updating Anaconda packages"
+export PATH="$PATH:$HOME/anaconda/bin"
+
 if hash conda &> /dev/null; then
     eval $(which conda)update conda
     eval $(which conda) update anaconda
 else
     better_echo "   conda command not found, potential path problem"
     echo "Problem using conda command" >> ${HOME}/provisioning.log 
-fi
-
-# other python tools
-better_echo "Configuring pip install packanges outside of Anaconda"
-if ! hash pip &> /dev/null; then
-    brew update
-    brew install node
-else
-    if hash pip &> /dev/null; then
-        eval $(which pip) install git+git://github.com/Lokaltog/powerline
-        eval $(which pip) install virtualenvwrapper awscli setuptools termdown
-    else
-        better_echo "   Pip not found, potential path problem"
-        echo "Problem installing pip" >> ${HOME}/provisioning.log 
-    fi
 fi
 
 # R TODO: add config
