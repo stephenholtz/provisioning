@@ -143,6 +143,7 @@ if [ which pip -ne /usr/local/bin/pip ]; then
 fi
 # install to user owned directories with --user flag (no sudo!)
 pip install git+git://github.com/Lokaltog/powerline --user
+pip install psutil --user
 pip install virtualenvwrapper awscli setuptools termdown --user
 
 # python -- use Anaconda for data analysis
