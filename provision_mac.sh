@@ -9,7 +9,7 @@ function better_echo () {
     printf "\n%b\n" "${GREEN}$1${NORMAL}"
 }
 
-# Remove temporary sudoers change
+# Remove temporary sudoers change 
 function restore_sudoers_timeout () {
     better_echo "Restoring /etc/sudoers. Backup at /etc/sudoers.bkp"
     sudo sed -i.bkp '/Defaults timestamp_timeout=-1/d ' /etc/sudoers
@@ -21,7 +21,7 @@ better_echo "******************************************************"
 better_echo "If this script does not terminate, may need to remove the last line from /etc/sudoers"
 echo "Defaults timestamp_timeout=-1" | sudo tee -a /etc/sudoers || exit 2
 
-# Update osx software
+# Update osx software, not perfect but works 
 better_echo "Upgrading OSX Software"
 softwareupdate --install --all
 sudo xcodebuild -license
@@ -102,13 +102,14 @@ while read -r line; do
         fi
     fi
 done < cask.installs 
+
 PATH="usr/local/sbin:$PATH"
 PATH="usr/local/bin:$PATH"
 export PATH
 
 # make sure alfred app can get to caskroom directory
 better_echo "Attempting to link Alfred"
-# first need to open alfred
+# first need to open alfred TODO: make this open command work
 open $(brew cask list alfred | grep -E -o -m1 '/opt/homebrew-cask/Caskroom/alfred.*app')
 brew cask alfred status
 if [ $? -ne 0 ]; then 
@@ -136,22 +137,17 @@ gem install tmuxinator json json_pure vimgolf
 
 # other python tools
 better_echo "Configuring pip install packanges outside of Anaconda"
-if ! hash pip &> /dev/null; then
-    brew update
-    brew install node
-else
-    if hash pip &> /dev/null; then
-        eval $(which pip) install git+git://github.com/Lokaltog/powerline
-        eval $(which pip) install virtualenvwrapper awscli setuptools termdown
-    else
-        better_echo "   Pip not found, potential path problem"
-        echo "Problem installing pip" >> ${HOME}/provisioning.log 
-    fi
+if [ which pip -ne /usr/local/bin/pip ]; then
+    sudo easy_install pip
+    PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
+# install to user owned directories with --user flag (no sudo!)
+pip install git+git://github.com/Lokaltog/powerline --user
+pip install virtualenvwrapper awscli setuptools termdown --user
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
-if ! hash conda &> /dev/null; then
+if [ ! -d $HOME/anaconda ]; then
     EX_DIR=$(pwd)
     mkdir "$HOME/Downloads/Provisioning"
     cd "$HOME/Downloads/Provisioning"
