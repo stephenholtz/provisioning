@@ -219,9 +219,14 @@ if [ ! -d "$HOME/dotfiles" ]; then
 fi
 # run sym-linking script from dotfiles required for vundle + antigen
 sh $HOME/dotfiles/linkall.sh
+
+better_echo "Installing zsh Plugins"
+# try to set up antigen
+source $HOME/.zshrc
+
 better_echo "Installing vim Plugins"
 # Install all vim bundles
-eval $(which vim) +PluginInstall! +qall
+vim +PluginInstall! +qall
 
 if [ ! -d "$HOME/code" ]; then
     mkdir -v $HOME/code
