@@ -8,8 +8,8 @@ rem install chocolatey
 @powershell -NoProfile -ExecutionPolicy unrestricted SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
 rem packages:
-rem
 rem choco install package-name == cinst package-name
+
 rem reqd
 cinst javaruntime
 
@@ -28,7 +28,6 @@ cinst putty.portable
 cinst autohotkey.portable
 cinst 7zip.commandline
 cinst 7zip.install
-cinst PowerShell
 cinst imagemagick
 cinst dropbox
 
