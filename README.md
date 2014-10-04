@@ -1,5 +1,5 @@
 # Provisioning
-## OSX
+## osx
 * Set of scripts to provision workstations, mostly for fun 
 * Uses homebrew, homebrew-cask, pip, gems, etc., to install utilities and apps.
 * cask.installs contains app installs
@@ -10,7 +10,8 @@
 
 ##windows
 * chocolatey used to provision new windows installs
-* every install listed in choco.installs
+* installed apps / tools are listed in .bat file
+* run provision_win8_ws.bat file as administrator
 
 ##linux
 * work in progress
