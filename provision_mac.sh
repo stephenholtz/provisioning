@@ -142,9 +142,9 @@ if [ $(which pip) != "/usr/local/bin/pip" ]; then
     PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
 # install to user owned directories with --user flag (no sudo!)
-usr/local/bin/pip install git+git://github.com/Lokaltog/powerline --user
-usr/local/bin/pip install psutil --user
-usr/local/bin/pip install virtualenvwrapper awscli setuptools termdown --user
+/usr/local/bin/pip install git+git://github.com/Lokaltog/powerline --user
+/usr/local/bin/pip install psutil --user
+/usr/local/bin/pip install virtualenvwrapper awscli setuptools termdown --user
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
