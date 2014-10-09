@@ -40,6 +40,5 @@ cinst flashplayeractivex
 cinst notepadplusplus
 cinst teamviewer
 cinst windirstat
-cinst mysql.workbench
 cinst lastpass
 cinst synergy
