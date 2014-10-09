@@ -125,7 +125,7 @@ brew linkapps
 # insert shims in the path to not muck with shipped
 # ruby requires rbenv, rbenv-build, rbenv-gem-rehash
 better_echo "Configuring ruby environment"
-PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 rbenv install 2.1.2
 rbenv global 2.1.2
@@ -139,7 +139,7 @@ gem install tmuxinator json json_pure vimgolf
 better_echo "Configuring pip install packanges outside of Anaconda"
 if [ $(which pip) != "/usr/local/bin/pip" ]; then
     sudo easy_install pip
-    PATH="$HOME/Library/Python/2.7/bin:$PATH"
+    export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
 # install to user owned directories with --user flag (no sudo!)
 /usr/local/bin/pip install git+git://github.com/Lokaltog/powerline --user
