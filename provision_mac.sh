@@ -137,14 +137,14 @@ gem install tmuxinator json json_pure vimgolf
 
 # other python tools
 better_echo "Configuring pip install packanges outside of Anaconda"
-if [ which pip -ne /usr/local/bin/pip ]; then
+if [ $(which pip) != "/usr/local/bin/pip" ]; then
     sudo easy_install pip
     PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
 # install to user owned directories with --user flag (no sudo!)
-pip install git+git://github.com/Lokaltog/powerline --user
-pip install psutil --user
-pip install virtualenvwrapper awscli setuptools termdown --user
+/usr/local/bin/pip install git+git://github.com/Lokaltog/powerline --user
+/usr/local/bin/pip install psutil --user
+/usr/local/bin/pip install virtualenvwrapper awscli setuptools termdown --user
 
 # python -- use Anaconda for data analysis
 better_echo "Configuring Anaconda installation"
@@ -219,10 +219,6 @@ if [ ! -d "$HOME/dotfiles" ]; then
 fi
 # run sym-linking script from dotfiles required for vundle + antigen
 sh $HOME/dotfiles/linkall.sh
-
-better_echo "Installing zsh Plugins"
-# try to set up antigen
-source $HOME/.zshrc
 
 better_echo "Installing vim Plugins"
 # Install all vim bundles
