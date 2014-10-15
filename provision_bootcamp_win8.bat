@@ -1,7 +1,7 @@
-rem Script will install chocolatey and most of the tools for 
-rem standard non-dev workstations.
-rem 
-rem easiest method: dowload this script and run from command prompt
+rem Download this script and run as adminstrator 
+rem
+rem For ephys workstation:
+rem Not Installed: Matlab, Office 2013 Pro Plus, Inventor Professional 2015, Zemax 
 
 rem install chocolatey
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
