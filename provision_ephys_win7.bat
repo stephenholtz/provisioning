@@ -24,6 +24,7 @@ cinst hg
 rem utilities
 cinst cygwin
 cinst cyg-get
+cinst autohotkey
 cinst Ghostscript
 cinst putty.portable
 cinst autohotkey.portable
