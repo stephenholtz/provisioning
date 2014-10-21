@@ -22,6 +22,8 @@ cinst svn
 cinst hg
 
 rem utilities
+cinst cygwin
+cinst cyg-get
 cinst Ghostscript
 cinst putty.portable
 cinst autohotkey.portable
@@ -39,6 +41,7 @@ cinst MicrosoftSecurityEssentials
 cinst flashplayeractivex
 cinst notepadplusplus
 cinst teamviewer
+cinst speccy
 cinst windirstat
 cinst lastpass
 cinst synergy
