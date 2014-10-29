@@ -10,6 +10,7 @@ rem packages:
 rem choco install package-name == cinst package-name
 
 rem reqd
+cinst java
 cinst javaruntime
 
 rem languages
