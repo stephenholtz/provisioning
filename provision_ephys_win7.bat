@@ -10,7 +10,7 @@ rem packages:
 rem choco install package-name == cinst package-name
 
 rem reqd
-cinst java
+cinst jdk8
 cinst javaruntime
 
 rem languages
@@ -23,6 +23,7 @@ cinst svn
 cinst hg
 
 rem utilities
+cinst adobereader
 cinst cygwin
 cinst cyg-get
 cinst autohotkey
@@ -47,3 +48,7 @@ cinst speccy
 cinst windirstat
 cinst lastpass
 cinst synergy
+
+rem change UAC to disable prompts
+rem this allows synergy to work seamlessly
+C:\Windows\System32\cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
