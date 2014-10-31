@@ -40,7 +40,7 @@ cinst vlc -force
 cinst greenshot -Version 1.1.9.13
 cinst MicrosoftSecurityEssentials -force
 cinst flashplayeractivex -force
-cinst notepadplusplus
-cinst teamviewer
-cinst windirstat
+cinst notepadplusplus -force
+cinst teamviewer -force
+cinst windirstat -force
 cinst synergy -force
