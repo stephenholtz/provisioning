@@ -25,6 +25,7 @@ cinst hg
 rem utilities
 cinst cygwin
 cinst cyg-get
+cinst autohotkey
 cinst Ghostscript
 cinst putty.portable -force
 cinst autohotkey.portable 
@@ -46,3 +47,7 @@ cinst teamviewer
 cinst speccy
 cinst windirstat
 cinst synergy
+
+rem change UAC to disable prompts
+rem this allows synergy to work seamlessly
+C:\Windows\System32\cmd.exe /k %windir%\System32\reg.exe ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
