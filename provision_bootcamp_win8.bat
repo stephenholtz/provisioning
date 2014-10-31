@@ -39,7 +39,6 @@ cinst GoogleChrome -force
 cinst vlc -force
 cinst greenshot -Version 1.1.9.13
 cinst MicrosoftSecurityEssentials -force
-cinst flashplayeractivex -force
 cinst notepadplusplus -force
 cinst teamviewer -force
 cinst windirstat -force
