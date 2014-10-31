@@ -9,20 +9,23 @@ rem install chocolatey
 rem packages:
 rem choco install package-name == cinst package-name
 
+rem rem -force comand usually fixes install problems (included for problematic packages)
+
 rem reqd
 cinst javaruntime
+cinst jdk8 -force
 
 rem languages
 cinst python
 
 rem version control
+cinst git
 cinst git.install
 cinst git.commandline
-cinst svn
 cinst hg
 
 rem utilities
-cinst Ghostscript
+cinst Ghostscript -force
 cinst putty.portable
 cinst autohotkey.portable
 cinst 7zip.commandline
@@ -31,13 +34,13 @@ cinst imagemagick
 cinst dropbox
 
 rem applications
-cinst GoogleChrome
-cinst vlc
+cinst adobereader -force
+cinst GoogleChrome -force
+cinst vlc -force
 cinst greenshot -Version 1.1.9.13
-cinst MicrosoftSecurityEssentials
-cinst flashplayeractivex
+cinst MicrosoftSecurityEssentials -force
+cinst flashplayeractivex -force
 cinst notepadplusplus
 cinst teamviewer
 cinst windirstat
-cinst lastpass
-cinst synergy
+cinst synergy -force

@@ -10,29 +10,31 @@ rem packages:
 rem choco install package-name == cinst package-name
 
 rem reqd
-cinst javaruntime
+cinst javaruntime -force
+cinst jdk8 -force
 
 rem languages
 cinst python
 
 rem version control
+cinst git
 cinst git.install
 cinst git.commandline
-cinst svn
 cinst hg
 
 rem utilities
 cinst cygwin
 cinst cyg-get
 cinst Ghostscript
-cinst putty.portable
-cinst autohotkey.portable
+cinst putty.portable -force
+cinst autohotkey.portable 
 cinst 7zip.commandline
 cinst 7zip.install
 cinst imagemagick
 cinst dropbox
 
 rem applications
+cinst adobereader -force
 cinst VirtualCloneDrive
 cinst GoogleChrome
 cinst vlc
@@ -43,5 +45,4 @@ cinst notepadplusplus
 cinst teamviewer
 cinst speccy
 cinst windirstat
-cinst lastpass
 cinst synergy
