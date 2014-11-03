@@ -34,6 +34,7 @@ cinst imagemagick
 cinst dropbox
 
 rem applications
+cinst plex-home-theater -force
 cinst adobereader -force
 cinst GoogleChrome -force
 cinst vlc -force
